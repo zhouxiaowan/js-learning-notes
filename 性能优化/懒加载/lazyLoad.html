@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<img data-src="./img/ai-product1.png" alt=""/>
+<img data-src="./img/ai-product2.png" alt=""/>
+<img data-src="./img/ai-product3.png" alt=""/>
+<img data-src="./img/ai-product4.png" alt=""/>
+<img data-src="./img/ai-product5.png" alt=""/>
+<img data-src="./img/ai-product6.png" alt=""/>
+<img data-src="./img/ai-product7.png" alt=""/>
+<img data-src="./img/ai-product8.png" alt=""/>
+<img data-src="./img/ai-product9.png" alt=""/>
+<img data-src="./img/ai-product10.png" alt=""/>
+<img data-src="./img/ai-product1.png" alt=""/>
+<img data-src="./img/ai-product2.png" alt=""/>
+<img data-src="./img/ai-product3.png" alt=""/>
+<img data-src="./img/ai-product4.png" alt=""/>
+<img data-src="./img/ai-product5.png" alt=""/>
+<img data-src="./img/ai-product6.png" alt=""/>
+<img data-src="./img/ai-product7.png" alt=""/>
+<img data-src="./img/ai-product8.png" alt=""/>
+<img data-src="./img/ai-product9.png" alt=""/>
+<img data-src="./img/ai-product10.png" alt=""/>
+<script>
+    /**
+     * document.documentElement.clientHeight //获取屏幕可视区域的高度
+     * element.offsetTop // 获取元素相对于文档
+     * document.documentElement.scrollTop // 获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离
+     * 当element.offsetTop-document.documentElement.scrollTop<document.documentElement.clientHeight时，表示元素在可视区域
+     */
+    var imgs = document.querySelectorAll('img');
+
+    /*
+    * 方式一，通过document.documentElement.clientHeight，element.offsetTop，document.documentElement.scrollTop
+    *
+    * */
+    // offsetTop是元素与offsetParent的距离，循环获取直到页面顶部
+    function getTop(e) {
+        var T = e.offsetTop;
+        while(e = e.offsetParent) {
+            T += e.offsetTop;
+        }
+        return T;
+    }
+
+    function lazyLoad(imgs) {
+        var H = document.documentElement.clientHeight;//获取可视区域高度
+        var S = document.documentElement.scrollTop || document.body.scrollTop;
+        for (var i = 0; i < imgs.length; i++) {
+            if (H + S > getTop(imgs[i]) && !imgs[i].src) {
+                imgs[i].src = imgs[i].getAttribute('data-src');
+            }
+        }
+    }
+    window.onload = window.onscroll = function () { //onscroll()在滚动条滚动的时候触发
+        lazyLoad(imgs);
+    }
+
+    /**
+     * 方式二，通过getBoundingClientRect()
+     */
+    // function isIn(el){
+    //     var bound = el.getBoundingClientRect();
+    //     var clientHeight = window.innerHeight;
+    //     return bound.top<=clientHeight
+    // }
+    // function check(){
+    //     Array.from(imgs).forEach(el=>{
+    //         if(isIn(el)){
+    //             loadImg(el)
+    //         }
+    //     })
+    // }
+    // function loadImg(el){
+    //     if(!el.src){
+    //         el.src = el.dataset.src
+    //     }
+    // }
+    //
+    // window.onload = window.onscroll = function () { //onscroll()在滚动条滚动的时候触发
+    //     check();
+    // }
+
+
+
+</script>
+</body>
+</html>
